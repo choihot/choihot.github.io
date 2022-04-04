@@ -4,6 +4,38 @@
   
     
     <entry>
+      <title>vscode+腾讯云+PicGo图床</title>
+      <link href="/2022/04/05/teng-xun-yun-typora-pei-zhi/"/>
+      <url>/2022/04/05/teng-xun-yun-typora-pei-zhi/</url>
+      
+        <content type="html"><![CDATA[<h1 id="vscode-腾讯云-PicGo图床"><a href="#vscode-腾讯云-PicGo图床" class="headerlink" title="vscode+腾讯云+PicGo图床"></a>vscode+腾讯云+PicGo图床</h1><p><strong>1. 配置腾讯云COS存储桶</strong></p><ul><li>做图床的话，访问权限要选”公有读私有写“。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220405011149.png" alt="20220405011149"></li></ul><p><strong>2. 配置密钥</strong></p><ul><li>使用PicGo做插件的话要配置一个密钥让插件使用。</li><li>密钥配置网址：<a href="https://console.cloud.tencent.com/cam/capi">https://console.cloud.tencent.com/cam/capi</a>  </li><li>配置好的密钥：<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220405013142.png" alt="20220405013142"></li></ul><p><strong>3. PicGo插件</strong></p><ul><li>在vscode安装PicGo插件。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220405011640.png" alt="20220405011640"></li></ul><p><strong>4. 配置PicGo</strong></p><ul><li>找到PicGo的设置， 主要配置如下：</li><li>Picgo › Pic Bed: Current，选择”tcyun”，即腾讯云。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220405012031.png" alt="20220405012031"></li><li>Picgo › Pic Bed › Tcyun: App ID，设置为腾讯云的APPID，是第二步的一串数字。</li><li>Picgo › Pic Bed › Tcyun: Area，腾讯云的存储桶所在区域，在创建存储桶时提供，如“ap-singapore”。</li><li>Picgo › Pic Bed › Tcyun: Bucket，存储桶的名称，一般是桶名 + “-” + 一串数字，如“test-1310232109“。</li><li>Picgo › Pic Bed › Tcyun: Custom Url，访问域名，直接填请求域名，如“<a href="https://test-1310232109.cos.ap-singapore.myqcloud.com”./">https://test-1310232109.cos.ap-singapore.myqcloud.com”。</a></li><li>Picgo › Pic Bed › Tcyun: Secret ID，在上面第二步生成。</li><li>Picgo › Pic Bed › Tcyun: Secret Key，在上面第二步生成。</li><li>Picgo › Pic Bed › Tcyun: Version，使用默认的 v5 就可以。  </li></ul><p><strong>5. 怎么上传</strong></p><ul><li>Mac可以把要上传的图片先复制在剪贴板，然后在要插入的地方使用快捷键Command + Option + U。</li><li>Windows可以用Ctrl + Alt + U。</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>关于垃圾回收，内存管理，内存泄漏。</title>
+      <link href="/2022/04/04/guan-yu-nei-cun-xie-lou/"/>
+      <url>/2022/04/04/guan-yu-nei-cun-xie-lou/</url>
+      
+        <content type="html"><![CDATA[<h1 id="关于垃圾回收、内存管理、内存泄漏。"><a href="#关于垃圾回收、内存管理、内存泄漏。" class="headerlink" title="关于垃圾回收、内存管理、内存泄漏。"></a>关于垃圾回收、内存管理、内存泄漏。</h1><ul><li>这篇文章主要还是因为面试被问到了内存泄漏。在红宝书上看到过但没有仔细研究，导致一问三不知。接下来重温红宝书。</li></ul><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h2 id="垃圾回收（GC）"><a href="#垃圾回收（GC）" class="headerlink" title="垃圾回收（GC）"></a>垃圾回收（GC）</h2><ul><li>垃圾回收（GC）即Garbage Collection。</li></ul><h2 id="内存泄漏是什么？"><a href="#内存泄漏是什么？" class="headerlink" title="内存泄漏是什么？"></a>内存泄漏是什么？</h2><ul><li>个人的理解是，电脑分配给浏览器(或者任何runtime)的内存不够用来跑自己写的<del>垃圾</del>代码了。<del>JS运行占的内存满得都溢出来了。</del><ul><li>比如函数被调用很多次，或者写一个千万级别的循环就会导致浏览器非常卡，甚至造成崩溃。</li><li>特别是内存不够多的设备上，内存没办法分配给浏览器很多，这时候也会有内存泄漏的问题。</li></ul></li></ul><h2 id="为什么会导致？"><a href="#为什么会导致？" class="headerlink" title="为什么会导致？"></a>为什么会导致？</h2><h3 id="意外声明全局变量"><a href="#意外声明全局变量" class="headerlink" title="意外声明全局变量"></a>意外声明全局变量</h3><ul><li>是最常见也</li></ul><ul><li> 参考：<a href="https://juejin.cn/post/6981588276356317214">https://juejin.cn/post/6981588276356317214</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 性能优化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>first blog</title>
       <link href="/2021/12/06/first-blog/"/>
       <url>/2021/12/06/first-blog/</url>
