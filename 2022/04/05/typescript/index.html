@@ -362,7 +362,7 @@ TypeScript运行
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.3k
                 </div>
                 
 
@@ -508,7 +508,7 @@ isTrue = "true"; //会报错
 
 let str: string = "";<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="array、tuple"><a href="#array、tuple" class="headerlink" title="array、tuple"></a>array、tuple</h4><h5 id="array-数组类型"><a href="#array-数组类型" class="headerlink" title="array 数组类型"></a>array 数组类型</h5><ul>
+<h4 id="array-tuple"><a href="#array-tuple" class="headerlink" title="array, tuple"></a>array, tuple</h4><h5 id="array-数组类型"><a href="#array-数组类型" class="headerlink" title="array 数组类型"></a>array 数组类型</h5><ul>
 <li>[]</li>
 <li>可以存放任意类型的数据。<pre class="line-numbers language-none"><code class="language-none">// 标准写法
 let list1: number[] = [1,2,3,4];
@@ -541,7 +541,7 @@ person1.push(3) <span aria-hidden="true" class="line-numbers-rows"><span></span>
 </ul>
 </li>
 </ul>
-<h4 id="Union联合类型与Literal字面量类型"><a href="#Union联合类型与Literal字面量类型" class="headerlink" title="Union联合类型与Literal字面量类型"></a>Union联合类型与Literal字面量类型</h4><h5 id="Union联合类型"><a href="#Union联合类型" class="headerlink" title="Union联合类型"></a>Union联合类型</h5><ul>
+<h4 id="Union-Literal"><a href="#Union-Literal" class="headerlink" title="Union, Literal"></a>Union, Literal</h4><h5 id="Union联合类型"><a href="#Union联合类型" class="headerlink" title="Union联合类型"></a>Union联合类型</h5><ul>
 <li>可以同时支持两个或者几个不同的类型。类型之间用 | 进行分隔，<pre class="line-numbers language-none"><code class="language-none">let union : string | number 
 union = 2;
 union = "dddd";
@@ -590,7 +590,8 @@ let mergeString = merge("hello", "world");//hello world
   let mergeString = merge("hello", "world","as-string");//hello world
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h4 id="枚举类型-Enum"><a href="#枚举类型-Enum" class="headerlink" title="枚举类型 Enum"></a>枚举类型 Enum</h4>  <pre class="line-numbers language-none"><code class="language-none">enum Color{
+<h4 id="Enum"><a href="#Enum" class="headerlink" title="Enum"></a>Enum</h4><ul>
+<li>枚举类型 <pre class="line-numbers language-none"><code class="language-none">enum Color{
   red,
   green,
   blue
@@ -614,9 +615,9 @@ enum Color3{
   blue = 1
 }
 let color3 = Color3.green
-console.log(color3) //输出"green"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="any-和unknown"><a href="#any-和unknown" class="headerlink" title="any 和unknown"></a>any 和unknown</h4><ul>
+console.log(color3) //输出"green"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h4 id="any-unknown"><a href="#any-unknown" class="headerlink" title="any, unknown"></a>any, unknown</h4><ul>
 <li><p>any是一个动态类型，支持和兼容所有类型</p>
 </li>
 <li><p>在不知道用什么类型的时候可以用any。</p>
