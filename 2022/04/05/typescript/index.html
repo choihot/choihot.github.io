@@ -807,117 +807,161 @@ getDistances = (p: IPoint) =&gt;{
   }
 }
 
-const point = new Point(2,3); //通过构造函数，在Point对象初始化的时候就可以给x,y赋值了。
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>那么如果在实例化的时候并不知道具体需要赋值多少，或者不想赋值怎么办？<ul>
+const point = new Point(2,3); //通过构造函数，在Point对象初始化的时候就可以给x,y赋值了。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>那么如果在实例化的时候并不知道具体需要赋值多少，或者不想赋值怎么办？</p>
+<ul>
 <li><strong>加一个问号 ? ，变成可选参数。</strong></li>
-<li>或者<strong>给参数一个默认值。</strong><pre class="line-numbers language-none"><code class="language-none">          constructor(x?: number, y: number = 2){
-            this.x = x;
-            this.y = y;
-          }
-        ```     
-      - 注意：JS构造函数不可以重载，一个类有且仅有一个constructor。
-      - 上面的赋值方法较为繁琐，于是引入了接下来的访问修饰符的概念。
-
-#### Access Modifier
-  - 访问修饰符分为public, private, protected.
-  - 一般默认的成员变量都是public<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>//利用public改写上面的代码:<br>class Point implements IPoint{<br>  //不需要在这里声明x,y的类型。<br>  //不能再使用”?”做可选参数。<br>  constructor(public x: number, public y: number = 2){</p>
-<pre><code>//不需要再用this.x = x进行赋值。
-</code></pre>
-<p>  }<br>}</p>
-<p>const point = new Point(24, 50);<br>//但是public方法下，依旧可以重新赋值，在实际工作中是非常危险的。<br>point.x = 30;<br>point.y =5;</p>
-<pre class="line-numbers language-none"><code class="language-none">
-- 所以可以使用private，把公有变成私有，就能让外部无法访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>  class Point implements IPoint{</p>
-<pre><code>constructor(private x: number, private y: number = 2){}
-</code></pre>
-<p>  }<br>//尝试使用point.x = 30进行修改则会报错。</p>
-<pre class="line-numbers language-none"><code class="language-none">
-- 但是又会出现新的问题，private会导致和IPoint接口声明的成员不一致。**接口的成员变量都默认为public**。设置为private会导致Point类报错。
-  - 最直接的解决方式是**在IPoint接口中直接删除x,y这两个公有变量。**
-  - 考虑到有从外部访问成员变量的需要，要用**getter，setter**这两个方法。比如getDistances函数就需要访问x,y。
-    - getter,setter: 把class的私有属性封装一下，让外部通过特定的方法(getter,setter)进行访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>  //setter作用就是在内部和外部建立一个缓冲带。<br>  setX = (value: number) =&gt;{</p>
-<pre><code>if(value &lt; 0 ){
-  throw new Error("value 不能小于0");
+<li>或者<strong>给参数一个默认值</strong>。<pre class="line-numbers language-none"><code class="language-none">constructor(x?: number, y: number = 2){
+  this.x = x;
+  this.y = y;
 }
-this.x = value;
-</code></pre>
-<p>  }<br>  point.setX(10);<br>  //point.setX(-9);//运行时会提示错误。</p>
-<p>  //间接获取class Point中的横坐标<br>  getX = () =&gt;{</p>
-<pre><code>return this.x;
-</code></pre>
-<p>  }<br>  console.log(point.getX());</p>
-<p>  //同理可以对纵坐标进行getter，setter的设置。<br>  setY = (value: number) =&gt;{…}<br>  getY = () =&gt;{}</p>
-<p>  //同时需要在IPoint接口添加getter，setter。<br>  interface IPoint{</p>
-<pre><code>drawPoint:()=&gt;void; //打印坐标点信息
-getDistances: (p:IPoint) =&gt; number; //需要传入对方坐标点信息
-getX: () =&gt; number
-getY: () =&gt; number
-setX: (value) =&gt; void
-setY: (value) =&gt; void
-</code></pre>
-<p>  }</p>
-<p>  //现在就可以用 getter, setter来让getDistances访问x,y的值了</p>
-<pre><code>getDistances = (p: IPoint) =&gt;{
-    return Math.pow(p.getX() - this.x, 2) + Math.pow(p.getY()-this.y,2)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>注意：JS构造函数不可以重载，一个类有且仅有一个constructor。</li>
+<li>上面的赋值方法较为繁琐，于是引入了接下来的访问修饰符的概念。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Access-Modifier"><a href="#Access-Modifier" class="headerlink" title="Access Modifier"></a>Access Modifier</h4><ul>
+<li><p>访问修饰符分为public, private, protected.</p>
+</li>
+<li><p>一般默认的成员变量都是public</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;!--
+  利用public改写上面的代码:
+  不需要在这里声明x,y的类型。
+  不能再使用"?"做可选参数。
+  不需要再用this.x = x进行赋值。 
+--&gt;
+class Point implements IPoint{
+  constructor(public x: number, public y: number = 2){}
+}
+
+const point = new Point(24, 50);
+//但是public方法下，依旧可以重新赋值，在实际工作中是非常危险的。
+point.x = 30;
+point.y =5;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>所以可以使用private，把公有变成私有，就能让外部无法访问。</p>
+<pre class="line-numbers language-none"><code class="language-none">  class Point implements IPoint{
+    constructor(private x: number, private y: number = 2){}
   }
+//这时候尝试使用point.x = 30进行修改则会报错。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>但是又会出现新的问题，private会导致和IPoint接口声明的成员不一致。<strong>接口的成员变量都默认为public</strong>。设置为private会导致Point类报错。</p>
+<ul>
+<li>最直接的解决方式是<strong>在IPoint接口中直接删除x,y这两个公有变量。</strong></li>
+<li>考虑到有从外部访问成员变量的需要，要用<strong>getter，setter</strong>这两个方法。比如getDistances函数就需要访问x,y。<ul>
+<li><strong>getter,setter: 把class的私有属性封装一下，让外部通过特定的方法(getter,setter)进行访问。</strong><pre class="line-numbers language-none"><code class="language-none">//setter作用就是在内部和外部建立一个缓冲带。
+setX = (value: number) =&gt;{
+  if(value &lt; 0 ){
+    throw new Error("value 不能小于0");
+  }
+  this.x = value;
 }
-</code></pre>
-<pre class="line-numbers language-none"><code class="language-none">- ts还提供了**getter,setter懒人包**:
-  - 时刻注意要**大写**
-  - 使用懒人包至少需要target为ES5或者更高版本。
-  - 设置编译器版本：`` tsc -t es5 [需要编译的文件名.ts]``<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<pre><code>//改写上述setX = () =&gt;{...}
-set X(value: number){...}
-get X(){...}
+point.setX(10);
+//point.setX(-9);//运行时会提示错误。
 
-//使用：如果需要赋值直接使用大写的X
-point.X = 10;
-console.log(point.X)
+//间接获取class Point中的横坐标
+getX = () =&gt;{
+  return this.x;
+}
+console.log(point.getX());
 
-//但是使用懒人包也需要在IPoint接口中定义：
-//直接使用大写的X进行定义：
+//同理可以对纵坐标进行getter，setter的设置。
+setY = (value: number) =&gt;{...}
+getY = () =&gt;{}
+
+//同时需要在IPoint接口添加getter，setter。
 interface IPoint{
   drawPoint:()=&gt;void; //打印坐标点信息
   getDistances: (p:IPoint) =&gt; number; //需要传入对方坐标点信息
-  X: number
-  Y: number
-</code></pre>
-<p>  }</p>
-  <pre class="line-numbers language-none"><code class="language-none">
-#### Generic
-- **Generic泛型**
-- 考虑到**可重用性**，不仅支持当前的数据类型，也支持未来的数据类型而存在。
-- 使用一个identity函数做例子:
-  - 不用泛型的话:`` function identity(arg: number): number {
-    return arg;
-    } ``
-  - 使用Any的话:`` function identity(arg: any): any {
-    return arg;
-    } `` 
-  - 但是使用Any我们只能知道有任意类型的数据被传入和返回。**并不能绑定和追踪两个值的类型。**
-  - 所以使用泛型: `` function identity&lt;T&gt;(arg: T): T {
-    return arg;
-    } ``
-- **泛型是可以帮助捕获用户传入的类型，同时使用这个类型当做返回值的类型。**
-- 同样是声明数字数组: 
-  - 普通声明：`` let list1: number[] = [1,2,3,4]``
-  - 泛型声明：`` let list2: Array&lt;number&gt; = [1,2,3,4]``
+  getX: () =&gt; number
+  getY: () =&gt; number
+  setX: (value) =&gt; void
+  setY: (value) =&gt; void
+}
 
-- 使用例子:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>//返回数组最后一位元素<br>let lastInArray = <t>(arr: T[]) =&gt;{<br>  return arr[arr.length - 1]<br>}<br>//会识别l1类型为number<br>const l1 = lastInArray([1,2,3,4]);<br>//会识别l2类型为string<br>const l2 = lastInArray([“a”,”b”,”c”]);<br>//因为有指定类型，所以l3的类型为string | number的数组<br>const l3 = lastInArray&lt;string | number&gt;([“a”,”b”,”c”]);</t></p>
-<p>//也可以传入一个默认类型参数<br>let makeTuple = &lt;T, Y = number&gt;(x: T, y: Y) = &gt; [x,y]</p>
-<p>//帮我们动态匹配类型，v1识别为 string | number 的元祖类型<br>const v1 = makeTuple(1, “one”)<br>//v2显式定义了类型，因为默认参数是number，就可以省略第二个参数<br>const v2 = makeTuple<boolean>(true,1);<br>```</boolean></p>
+//现在就可以用 getter, setter来让getDistances访问x,y的值了
+  getDistances = (p: IPoint) =&gt;{
+      return Math.pow(p.getX() - this.x, 2) + Math.pow(p.getY()-this.y,2)
+    }
+  }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li>ts还提供了<strong>getter,setter懒人包</strong>:<ul>
+<li>时刻注意要<strong>大写</strong></li>
+<li>使用懒人包至少需要target为ES5或者更高版本。</li>
+<li>设置编译器版本：<code> tsc -t es5 [需要编译的文件名.ts]</code><pre class="line-numbers language-none"><code class="language-none">  //改写上述setX = () =&gt;{...}
+  set X(value: number){...}
+  get X(){...}
+
+  //使用：如果需要赋值直接使用大写的X
+  point.X = 10;
+  console.log(point.X)
+
+  //但是使用懒人包也需要在IPoint接口中定义：
+  //直接使用大写的X进行定义：
+  interface IPoint{
+    drawPoint:()=&gt;void; //打印坐标点信息
+    getDistances: (p:IPoint) =&gt; number; //需要传入对方坐标点信息
+    X: number
+    Y: number
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
 </li>
 </ul>
 </li>
+</ul>
+<h4 id="Generic"><a href="#Generic" class="headerlink" title="Generic"></a>Generic</h4><ul>
+<li><p><strong>Generic泛型</strong></p>
+</li>
+<li><p>考虑到<strong>可重用性</strong>，不仅支持当前的数据类型，也支持未来的数据类型而存在。</p>
+</li>
+<li><p>使用一个identity函数做例子:</p>
+<ul>
+<li><p>不用泛型的话:<code>function identity(arg: number): number { return arg; }</code></p>
+</li>
+<li><p>使用Any的话:<code>function identity(arg: any): any { return arg; }</code> </p>
+</li>
+<li><p>但是使用Any我们只能知道有任意类型的数据被传入和返回。<strong>并不能绑定和追踪两个值的类型。</strong></p>
+</li>
+<li><p>所以使用泛型: <code>function identity&lt;T&gt;(arg: T): T { return arg; }</code></p>
+</li>
+</ul>
+</li>
+<li><p><strong>泛型是可以帮助捕获用户传入的类型，同时使用这个类型当做返回值的类型。</strong></p>
+</li>
+<li><p>同样是声明数字数组: </p>
+<ul>
+<li>普通声明：<code> let list1: number[] = [1,2,3,4]</code></li>
+<li>泛型声明：<code> let list2: Array&lt;number&gt; = [1,2,3,4]</code></li>
+</ul>
+</li>
+<li><p>使用例子:</p>
+<pre class="line-numbers language-none"><code class="language-none">//返回数组最后一位元素
+let lastInArray = &lt;T&gt;(arr: T[]) =&gt;{
+  return arr[arr.length - 1]
+}
+//会识别l1类型为number
+const l1 = lastInArray([1,2,3,4]);
+
+//会识别l2类型为string
+const l2 = lastInArray(["a","b","c"]);
+
+//因为有指定类型，所以l3的类型为string | number的数组
+const l3 = lastInArray&lt;string | number&gt;(["a","b","c"]);
+
+//也可以传入一个默认类型参数
+let makeTuple = &lt;T, Y = number&gt;(x: T, y: Y) = &gt; [x,y]
+
+//帮我们动态匹配类型，v1识别为 string | number 的元祖类型
+const v1 = makeTuple(1, "one")
+
+//v2显式定义了类型，因为默认参数是number，就可以省略第二个参数
+const v2 = makeTuple&lt;boolean&gt;(true,1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 
                 
@@ -1305,7 +1349,7 @@ interface IPoint{
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.1k</span>
+                        class="white-color">4.2k</span>
             
             
             
