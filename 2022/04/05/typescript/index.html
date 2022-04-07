@@ -355,21 +355,21 @@ TypeScript运行
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-06
+                    2022-04-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    14 分
                 </div>
                 
 
@@ -614,10 +614,9 @@ enum Color3{
   green = "green",
   blue = 1
 }
-let color3 = Color3.green
-console.log(color3) //输出"green"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+console.log(color3) //输出"green"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h4 id="any-unknown"><a href="#any-unknown" class="headerlink" title="any, unknown"></a>any, unknown</h4><ul>
+<h4 id="Any-Unknown"><a href="#Any-Unknown" class="headerlink" title="Any, Unknown"></a>Any, Unknown</h4><ul>
 <li><p>any是一个动态类型，支持和兼容所有类型</p>
 </li>
 <li><p>在不知道用什么类型的时候可以用any。</p>
@@ -634,7 +633,290 @@ randomValue = {};
 randomValue(); //编译执行到这里的时候会报错。
 randomValue.toUpperCase()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>unknown和any差不多，但是可以保证类型的安全。</p>
+<li><p>unknown和any差不多，不能确定变量的类型，但是可以保证类型的安全。</p>
+<pre class="line-numbers language-none"><code class="language-none">用法：将上面的代码略作修改
+if(typeof randomValue === 'function'){
+  randomValue();
+}
+if(typeof randomValue === 'string'){
+  randomValue.toUpperCase();
+}
+  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>如何选择？</p>
+<ul>
+<li>any适合代码的快速成型快速上线，但是会遗留下来一些安全隐患。</li>
+<li>unknown就更保险一点。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Void-Undefined-Never"><a href="#Void-Undefined-Never" class="headerlink" title="Void, Undefined, Never"></a>Void, Undefined, Never</h4><ul>
+<li><p>Void:</p>
+<ul>
+<li>Void和Undefined区别就在于在探讨某个变量到底是否存在的哲学问题。</li>
+<li>Undefined指的是变量没有赋值没有初始化。</li>
+<li>Void指的是变量本身就不存在。</li>
+<li>ts中，所有的void输出的都是undefined。<pre class="line-numbers language-none"><code class="language-none">function printResult(): void {
+  console.log("lalala")
+}
+console.log(printResult(()) //输出undefined
+
+function printResult(): undefined {
+  console.log("lalala")
+  return //一定要加return,否则会报错  
+}
+console.log(printResult(()) //输出undefined<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p><strong>Never</strong></p>
+<ul>
+<li><strong>一个函数永远执行不完，就是Never的本质。</strong></li>
+<li>用法：用来处理异常或者Promise</li>
+<li>下面的函数本质上没有返回值。返回值的类型会显示”void”。</li>
+<li>下面这个函数不仅没有返回值，还会抛出异常。也就是执行到”throw”的时候就会强行让该函数结束了。永远不会执行完成。<pre class="line-numbers language-none"><code class="language-none">function throwError(message: string, errorCode: number): never{
+  throw{
+    message,
+    errorCode
+  }
+}
+throwError("not found", 404)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>除了抛出异常以外，函数无法执行完成的方法：使用while循环。<pre class="line-numbers language-none"><code class="language-none">function whileLoop(): never{
+  while(true){
+    console.log("dddd")
+  }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+<h3 id="TypeScript的面对对象"><a href="#TypeScript的面对对象" class="headerlink" title="TypeScript的面对对象"></a>TypeScript的面对对象</h3><h4 id="Object-对象类型"><a href="#Object-对象类型" class="headerlink" title="Object 对象类型"></a>Object 对象类型</h4><ul>
+<li><p>js中使用花括号并且以键值类形式实现的数据，都属于对象类型。</p>
+</li>
+<li><p>但是ts更明确来说是key to type，键类型对。</p>
+<pre class="line-numbers language-none"><code class="language-none">const person = {
+  firstName : "choi",
+  lastName: "hot",
+  age: 18
+}
+console.log(person.nickname)//调用没有定义的内部变量，js不会报错，但是ts会。
+
+//如果不怕麻烦可以这样定义：
+const person = {
+  firstName : string,
+  lastName: string,
+  age: number
+} = {
+  firstName : "choi",
+  lastName: "hot",
+  age: 18
+}
+
+&lt;!-- 
+  笼统定义object类型不会对代码有任何帮助，ts实际上不知道对象内部结构。
+  指定了object类型相当于指定了一对空的花括号。
+  const person: object 相当于 const person: {} 
+  ts知道它是一个对象，但是不知道内部情况。  
+--&gt;
+
+const person: object = {
+  firstName : "choi",
+  lastName: "hot",
+  age: 18
+}
+console.log(person.firstName)//会报错
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Interface-Class"><a href="#Interface-Class" class="headerlink" title="Interface, Class"></a>Interface, Class</h4><ul>
+<li><strong>Interface面对对象接口：</strong></li>
+<li>接口就相当于一份说明书，类的实现都要按照这份说明书来。<pre class="line-numbers language-none"><code class="language-none">let drawPoint = (point) =&gt; {
+  console.log({x: point.x, y:point.y});
+}
+
+//这个时候没有对point进行类型限制，所以可以随便传参，会导致代码和业务逻辑都出错。
+//后面两行代码并不会报错。
+drawPoint({x:105,y:24});
+drawPoint({x:"choi", y:"hot"});
+drawPoint({weather: "干燥", temperature:"5oC"});
+
+//所以要创建interface接口对point进行类型限制。
+    interface Point{
+      x: number;
+      y: number;
+    }
+
+//将最上面的代码改为：
+let drawPoint = (point：Point) =&gt; {
+  console.log({x: point.x, y:point.y});
+}
+//这时候刚才没报错的两行代码就会报错了。
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>因为有对象就会引出了“高内聚，低耦合”的问题。上面的代码中的drawPoint和Point这个对象高度相关，应该用面对对象的思维来解决，不然写的代码都是低内聚的。</li>
+<li>把所有相关的属性和方法都打包在一个集合中，就是Class。</li>
+</ul>
+<ul>
+<li><p><strong>Class类</strong></p>
+</li>
+<li><p>对class的理解：</p>
+<ul>
+<li>封装：对具体细节具体过程的隐藏。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220407152610.png" alt="20220407152610"></li>
+</ul>
+</li>
+<li><p>重写上面的drawPoint代码:</p>
+<pre class="line-numbers language-none"><code class="language-none">interface IPoint{
+  x: number;
+  y: number;
+  drawPoint:()=&gt;void; //打印坐标点信息
+  getDistances: (p:IPoint) =&gt; number; //需要传入对方坐标点信息
+}
+
+//需要实现IPoint中所有的成员变量和成员方法。
+class Point implements IPoint{
+  x: number; 
+  y: number;
+  drawPoint = () =&gt;{
+    console.log("x: ", this.x, " y: ", this.y);
+  }
+  getDistances = (p: IPoint) =&gt;{
+    return Math.pow(p.x - this.x, 2) + Math.pow(p.y-this.y,2)
+  }
+}
+
+const point = new Point();
+&lt;!-- point.x = 2;
+point.y = 3; --&gt;
+point.drawPoint()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>类class就是Point，对象就是这个class Point 的实例。也就是说使用new实例化以后就产生了一个对象。对象也被称作实例，instance。</p>
+</li>
+<li><p>运行drawPoint的时候报错，因为x,y没有初始化。可以直接赋值。</p>
+<ul>
+<li>但更好的方法是<strong>使用构造函数 constructor</strong>。</li>
+<li>改写上述代码：<pre class="line-numbers language-none"><code class="language-none">class Point implements IPoint{
+x: number; 
+y: number;
+
+constructor(x: number, y: number){
+  this.x = x;
+  this.y = y;
+}
+
+drawPoint = () =&gt;{
+  console.log("x: ", this.x, " y: ", this.y);
+}
+getDistances = (p: IPoint) =&gt;{
+  return Math.pow(p.x - this.x, 2) + Math.pow(p.y-this.y,2)
+  }
+}
+
+const point = new Point(2,3); //通过构造函数，在Point对象初始化的时候就可以给x,y赋值了。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>那么如果在实例化的时候并不知道具体需要赋值多少，或者不想赋值怎么办？<ul>
+<li><strong>加一个问号 ? ，变成可选参数。</strong></li>
+<li>或者<strong>给参数一个默认值。</strong><pre class="line-numbers language-none"><code class="language-none">          constructor(x?: number, y: number = 2){
+            this.x = x;
+            this.y = y;
+          }
+        ```     
+      - 注意：JS构造函数不可以重载，一个类有且仅有一个constructor。
+      - 上面的赋值方法较为繁琐，于是引入了接下来的访问修饰符的概念。
+
+#### Access Modifier
+  - 访问修饰符分为public, private, protected.
+  - 一般默认的成员变量都是public<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>//利用public改写上面的代码:<br>class Point implements IPoint{<br>  //不需要在这里声明x,y的类型。<br>  //不能再使用”?”做可选参数。<br>  constructor(public x: number, public y: number = 2){</p>
+<pre><code>//不需要再用this.x = x进行赋值。
+</code></pre>
+<p>  }<br>}</p>
+<p>const point = new Point(24, 50);<br>//但是public方法下，依旧可以重新赋值，在实际工作中是非常危险的。<br>point.x = 30;<br>point.y =5;</p>
+<pre class="line-numbers language-none"><code class="language-none">
+- 所以可以使用private，把公有变成私有，就能让外部无法访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>  class Point implements IPoint{</p>
+<pre><code>constructor(private x: number, private y: number = 2){}
+</code></pre>
+<p>  }<br>//尝试使用point.x = 30进行修改则会报错。</p>
+<pre class="line-numbers language-none"><code class="language-none">
+- 但是又会出现新的问题，private会导致和IPoint接口声明的成员不一致。**接口的成员变量都默认为public**。设置为private会导致Point类报错。
+  - 最直接的解决方式是**在IPoint接口中直接删除x,y这两个公有变量。**
+  - 考虑到有从外部访问成员变量的需要，要用**getter，setter**这两个方法。比如getDistances函数就需要访问x,y。
+    - getter,setter: 把class的私有属性封装一下，让外部通过特定的方法(getter,setter)进行访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  //setter作用就是在内部和外部建立一个缓冲带。<br>  setX = (value: number) =&gt;{</p>
+<pre><code>if(value &lt; 0 ){
+  throw new Error("value 不能小于0");
+}
+this.x = value;
+</code></pre>
+<p>  }<br>  point.setX(10);<br>  //point.setX(-9);//运行时会提示错误。</p>
+<p>  //间接获取class Point中的横坐标<br>  getX = () =&gt;{</p>
+<pre><code>return this.x;
+</code></pre>
+<p>  }<br>  console.log(point.getX());</p>
+<p>  //同理可以对纵坐标进行getter，setter的设置。<br>  setY = (value: number) =&gt;{…}<br>  getY = () =&gt;{}</p>
+<p>  //同时需要在IPoint接口添加getter，setter。<br>  interface IPoint{</p>
+<pre><code>drawPoint:()=&gt;void; //打印坐标点信息
+getDistances: (p:IPoint) =&gt; number; //需要传入对方坐标点信息
+getX: () =&gt; number
+getY: () =&gt; number
+setX: (value) =&gt; void
+setY: (value) =&gt; void
+</code></pre>
+<p>  }</p>
+<p>  //现在就可以用 getter, setter来让getDistances访问x,y的值了</p>
+<pre><code>getDistances = (p: IPoint) =&gt;{
+    return Math.pow(p.getX() - this.x, 2) + Math.pow(p.getY()-this.y,2)
+  }
+}
+</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">- ts还提供了**getter,setter懒人包**:
+  - 时刻注意要**大写**
+  - 使用懒人包至少需要target为ES5或者更高版本。
+  - 设置编译器版本：`` tsc -t es5 [需要编译的文件名.ts]``<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>//改写上述setX = () =&gt;{...}
+set X(value: number){...}
+get X(){...}
+
+//使用：如果需要赋值直接使用大写的X
+point.X = 10;
+console.log(point.X)
+
+//但是使用懒人包也需要在IPoint接口中定义：
+//直接使用大写的X进行定义：
+interface IPoint{
+  drawPoint:()=&gt;void; //打印坐标点信息
+  getDistances: (p:IPoint) =&gt; number; //需要传入对方坐标点信息
+  X: number
+  Y: number
+</code></pre>
+<p>  }</p>
+  <pre class="line-numbers language-none"><code class="language-none">
+#### Generic
+- **Generic泛型**
+- 考虑到**可重用性**，不仅支持当前的数据类型，也支持未来的数据类型而存在。
+- 使用一个identity函数做例子:
+  - 不用泛型的话:`` function identity(arg: number): number {
+    return arg;
+    } ``
+  - 使用Any的话:`` function identity(arg: any): any {
+    return arg;
+    } `` 
+  - 但是使用Any我们只能知道有任意类型的数据被传入和返回。**并不能绑定和追踪两个值的类型。**
+  - 所以使用泛型: `` function identity&lt;T&gt;(arg: T): T {
+    return arg;
+    } ``
+- **泛型是可以帮助捕获用户传入的类型，同时使用这个类型当做返回值的类型。**
+- 同样是声明数字数组: 
+  - 普通声明：`` let list1: number[] = [1,2,3,4]``
+  - 泛型声明：`` let list2: Array&lt;number&gt; = [1,2,3,4]``
+
+- 使用例子:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>//返回数组最后一位元素<br>let lastInArray = <t>(arr: T[]) =&gt;{<br>  return arr[arr.length - 1]<br>}<br>//会识别l1类型为number<br>const l1 = lastInArray([1,2,3,4]);<br>//会识别l2类型为string<br>const l2 = lastInArray([“a”,”b”,”c”]);<br>//因为有指定类型，所以l3的类型为string | number的数组<br>const l3 = lastInArray&lt;string | number&gt;([“a”,”b”,”c”]);</t></p>
+<p>//也可以传入一个默认类型参数<br>let makeTuple = &lt;T, Y = number&gt;(x: T, y: Y) = &gt; [x,y]</p>
+<p>//帮我们动态匹配类型，v1识别为 string | number 的元祖类型<br>const v1 = makeTuple(1, “one”)<br>//v2显式定义了类型，因为默认参数是number，就可以省略第二个参数<br>const v2 = makeTuple<boolean>(true,1);<br>```</boolean></p>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -1023,7 +1305,7 @@ randomValue.toUpperCase()
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">2k</span>
+                        class="white-color">4.1k</span>
             
             
             
