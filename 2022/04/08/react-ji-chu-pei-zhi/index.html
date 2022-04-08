@@ -4,13 +4,20 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="关于垃圾回收，内存管理，内存泄漏。, Choihot">
-    <meta name="description" content="（还没写完，先留着。刚配置完图床。）
-关于垃圾回收、内存管理、内存泄漏。
-这篇文章主要还是因为面试被问到了内存泄漏。在红宝书上看到过但没有仔细研究。接下来重温红宝书。
+    <meta name="keywords" content="React基础配置, Choihot">
+    <meta name="description" content="搭建React项目npx create-react-app my-app 
+cd my-app
+npm install 
+npm start
 
-垃圾回收（GC）
-垃圾回收（GC）即Garbage Collectio">
+React设计理念
+单向数据流
+数据与界面绑定
+单向渲染
+
+
+虚拟dom
+如果真实的UI需要更新">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -24,7 +31,7 @@
 
     
 
-    <title>关于垃圾回收，内存管理，内存泄漏。 | Choihot</title>
+    <title>React基础配置 | Choihot</title>
     <link rel="icon" type="image/png" href="/">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -205,12 +212,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">关于垃圾回收，内存管理，内存泄漏。</h1>
+                    <h1 class="description center-align post-title">React基础配置</h1>
                 </div>
             </div>
         </div>
@@ -324,13 +331,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
-                                <span class="chip bg-color">性能优化</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -342,7 +345,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-04
+                    2022-04-08
                 </div>
                 
 
@@ -356,7 +359,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    272
+                    307
                 </div>
                 
 
@@ -386,28 +389,52 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>（还没写完，先留着。刚配置完图床。）</p>
-<h1 id="关于垃圾回收、内存管理、内存泄漏。"><a href="#关于垃圾回收、内存管理、内存泄漏。" class="headerlink" title="关于垃圾回收、内存管理、内存泄漏。"></a>关于垃圾回收、内存管理、内存泄漏。</h1><ul>
-<li>这篇文章主要还是因为面试被问到了内存泄漏。在红宝书上看到过但没有仔细研究。接下来重温红宝书。</li>
+                <h1 id="搭建React项目"><a href="#搭建React项目" class="headerlink" title="搭建React项目"></a>搭建React项目</h1><pre class="line-numbers language-none"><code class="language-none">npx create-react-app my-app 
+cd my-app
+npm install 
+npm start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="React设计理念"><a href="#React设计理念" class="headerlink" title="React设计理念"></a>React设计理念</h2><ul>
+<li>单向数据流<ul>
+<li>数据与界面绑定</li>
+<li>单向渲染</li>
 </ul>
-<h2 id="垃圾回收（GC）"><a href="#垃圾回收（GC）" class="headerlink" title="垃圾回收（GC）"></a>垃圾回收（GC）</h2><ul>
-<li>垃圾回收（GC）即Garbage Collection。程序运行过程中会产生许多”垃圾”，</li>
+</li>
+<li>虚拟dom<ul>
+<li>如果真实的UI需要更新，对比需要更新的UI，以最小的代价更新UI的元素。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220408173032.png"></li>
 </ul>
-<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h2 id="内存泄漏是什么？"><a href="#内存泄漏是什么？" class="headerlink" title="内存泄漏是什么？"></a>内存泄漏是什么？</h2><ul>
-<li>个人的理解是，电脑分配给浏览器(或者任何runtime)的内存不够用来跑自己写的<del>垃圾</del>代码了。<del>JS运行占的内存满得都溢出来了。</del><ul>
-<li>比如函数被调用很多次，或者写一个千万级别的循环就会导致浏览器非常卡，甚至造成崩溃。</li>
-<li>特别是内存不够多的设备上，内存没办法分配给浏览器很多，这时候也会有内存泄漏的问题。</li>
+</li>
+<li>组件化<ul>
+<li>一个项目是由无数个独立的组件互相搭配组合起来的。</li>
+<li>能保持交互一致性</li>
+<li>保持视觉风格的统一</li>
+<li>便于程序员之间互相协作。</li>
 </ul>
 </li>
 </ul>
-<h2 id="怎么导致的？"><a href="#怎么导致的？" class="headerlink" title="怎么导致的？"></a>怎么导致的？</h2><h3 id="意外声明全局变量"><a href="#意外声明全局变量" class="headerlink" title="意外声明全局变量"></a>意外声明全局变量</h3><ul>
-<li>是最常见也是最容易修复的内存泄漏问题。</li>
-<li></li>
-</ul>
+<h1 id="TypeScript-React"><a href="#TypeScript-React" class="headerlink" title="TypeScript+React"></a>TypeScript+React</h1><pre class="line-numbers language-none"><code class="language-none">npx create-react-app my-app-ts --template typescript<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li> 参考：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6981588276356317214">https://juejin.cn/post/6981588276356317214</a></li>
+<li>ts无法被主流的浏览器识别，需要编译器进行编译。</li>
+<li>create-react-app默认有”babel-loader”编译器。</li>
+<li>编译器配置文件: tsconfig.json</li>
 </ul>
+<h2 id="TypeScript编译流程"><a href="#TypeScript编译流程" class="headerlink" title="TypeScript编译流程"></a>TypeScript编译流程</h2><ul>
+<li><code> npm run eject</code></li>
+<li>项目根目录中会多”config”,”scripts”文件夹。</li>
+<li>config下的webpack.config.js文件是项目的配置核心。<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//核心</span>
+<span class="token keyword">const</span> useTypeScript <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">existsSync</span><span class="token punctuation">(</span>paths<span class="token punctuation">.</span>appTsConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+<span class="token punctuation">{</span> 
+    test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.(js|mjs)$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+    exclude<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">@babel(?:\/|\\{1,2})runtime</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+    loader<span class="token operator">:</span> require<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'babel-loader'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>实际上create出来的react网站也是基于webpack的网站，create-react-app帮忙做了脚手架封装。</li>
+<li>如何<strong>将一个现有的js项目改为ts项目</strong>？</li>
+<li>进入项目根目录后，运行: <code>npm install --save typescript @types/node @types/react @types/react-dom @types/jest</code></li>
+</ul>
+<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="React函数式组件"><a href="#React函数式组件" class="headerlink" title="React函数式组件"></a>React函数式组件</h2><h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2>
                 
             </div>
             <hr/>
@@ -433,7 +460,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://choihot.github.io/2022/04/04/guan-yu-nei-cun-xie-lou/">http://choihot.github.io/2022/04/04/guan-yu-nei-cun-xie-lou/</a>
+                    <a href="http://choihot.github.io/2022/04/08/react-ji-chu-pei-zhi/">http://choihot.github.io/2022/04/08/react-ji-chu-pei-zhi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -470,11 +497,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
-                                    <span class="chip bg-color">性能优化</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -520,17 +543,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/04/05/teng-xun-yun-typora-pei-zhi/">
+                <a href="/2022/04/08/react-ji-chu-pei-zhi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="vscode+腾讯云+PicGo图床">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="React基础配置">
                         
-                        <span class="card-title">vscode+腾讯云+PicGo图床</span>
+                        <span class="card-title">React基础配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -540,9 +564,47 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-05
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Choihot
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/05/typescript/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="TypeScript">
+                        
+                        <span class="card-title">TypeScript</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -554,47 +616,10 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%99%E7%A8%8B/">
-                        <span class="chip bg-color">教程</span>
+                    <a href="/tags/TypeScript/">
+                        <span class="chip bg-color">TypeScript</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/12/06/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-06
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Choihot
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
