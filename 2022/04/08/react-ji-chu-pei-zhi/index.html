@@ -822,7 +822,9 @@ onClick <span class="token operator">=</span> <span class="token punctuation">{<
 <li>这个时候执行之后发现即使触发了两次<code>setState</code>，<code>count</code>也只会加1。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220410170352.png"></li>
 <li>如何解决？<ul>
 <li>setState()本身提供了方法。</li>
-<li><code>setState(updater, [callback])</code>。它接受两个参数，<code>(state, props) =&gt; stateChange</code>。函数的参数由preState和preProps组成。改写上面的代码。<pre class="line-numbers language-js" data-language="js"><code class="language-js"> <span class="token operator">&lt;</span>button
+<li><code>setState(updater, [callback])</code>。它接受两个参数，<code>(state, props) =&gt; stateChange</code>。函数的参数由state和props组成。</li>
+<li>updater 函数中接收的 state 和 props 都保证为最新。updater 的返回值会与 state 进行浅合并。</li>
+<li>改写上面的代码。<pre class="line-numbers language-js" data-language="js"><code class="language-js"> <span class="token operator">&lt;</span>button
   onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">preState<span class="token punctuation">,</span> preProps</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">{</span> count<span class="token operator">:</span> preState<span class="token punctuation">.</span>count <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
       console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"this.state.count"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1229,7 +1231,7 @@ onClick <span class="token operator">=</span> <span class="token punctuation">{<
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">6.6k</span>
+                        class="white-color">6.7k</span>
             
             
             
