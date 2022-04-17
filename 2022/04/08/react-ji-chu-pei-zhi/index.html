@@ -363,14 +363,14 @@ React设计理念
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    2.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    11 分
                 </div>
                 
 
@@ -837,12 +837,35 @@ onClick <span class="token operator">=</span> <span class="token punctuation">{<
   count<span class="token operator">+</span><span class="token number">1</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
 <span class="token operator">&lt;</span>span<span class="token operator">&gt;</span> count<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>count<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>这个时候可以实现两次更新State.count了。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220410171232.png"></li>
+<li>这个时候可以实现两次更新State.count了。<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220410171232.png"><h2 id="React-组件的生命周期"><a href="#React-组件的生命周期" class="headerlink" title="React 组件的生命周期"></a>React 组件的生命周期</h2></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+</li>
+<li><p>Mounting: 创建虚拟DOM，渲染UI</p>
+<ul>
+<li><strong>constructor</strong></li>
+<li>componentDidMount()</li>
+</ul>
+</li>
+<li><p>Updating: 更新虚拟DOM，重新渲染UI</p>
+<ul>
+<li><code>getDerivedStateFromProps(nextProps, prevState){}</code>:<ul>
+<li>在调用 render 方法之前调用，无论是在初始挂载时还是在后续更新时。</li>
+<li>它应该返回一个对象来更新状态，或者null什么都不更新。</li>
+</ul>
+</li>
+<li>shouldComponentUpdate(): to let React know if a component’s output is not affected by the current change in state or props</li>
+<li><pre><code class="js">  shouldComponentUpdate(nextProps, nextState){
+    return nextState.some !== this.state.some
+  } 
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Unmounting: 删除虚拟DOM，移除UI<br><img src="https://choichoi-1310042158.cos.ap-singapore.myqcloud.com/20220410223555.png" alt="生命周期"></p>
 </li>
 </ul>
 
@@ -1231,7 +1254,7 @@ onClick <span class="token operator">=</span> <span class="token punctuation">{<
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">6.7k</span>
+                        class="white-color">6.8k</span>
             
             
             
